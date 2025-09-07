@@ -3,7 +3,8 @@
   let selectedCase = $state('');
   let selectedSpacing = $state('');
   // let selectedNotation = $state('');
-  let outputText = $derived(transformText(inputText, selectedCase, selectedSpacing));
+  let isClean = $state(false);
+  let outputText = $derived(transformText(inputText));
 
   function returnSpasing(selectedSpacing: string): string {
     switch (selectedSpacing) {
@@ -70,7 +71,21 @@
     }
   }
 
-  function transformText(inputText: string, selectedCase: string, selectedSpacing: string): string {
+  function cleanText(inputText: string, cbStrip: boolean): string {
+    return inputText
+      .split('\n')
+      .filter(line => line.trim().replace(/[_\s-]+/g, '').length > 0) // Filter out empty lines
+      .map(line => line
+        .replace(/^[\s_\-]+|[\s_\-]+$/g, '') // Remove leading and trailing spaces and dashes
+        .replace(/[\s_\-]+/g, ' ') // Replace multiple spaces with a single space
+      )
+      .join('\n');
+  }
+
+  function transformText(inputText: string): string {
+    if (isClean) {
+      return transformCase(transformSpasing(cleanText(inputText, isClean), selectedSpacing), selectedCase);
+    }
     return transformCase(transformSpasing(inputText, selectedSpacing), selectedCase);
   }
 
@@ -102,6 +117,9 @@
   .btn-xs {
     margin: 5px;
   }
+  .checkbox {
+    margin-right: 5px;
+  }
 </style>
 
 <div class="container mx-auto flex flex-col items-center gap-4">
@@ -121,6 +139,11 @@
     <input class="join-item btn" type="radio" name="spacing" value="snake" aria-label="Snake" bind:group={selectedSpacing}>
     <input class="join-item btn" type="radio" name="spacing" value="none" aria-label="No" bind:group={selectedSpacing}>
   </div>
+
+  <label class="label">
+    <input type="checkbox" class="checkbox" bind:checked={isClean}/>
+    Trim spaces and remove dups
+  </label>
 
   <!-- <select class="select">
     <option disabled selected>Notation</option>
