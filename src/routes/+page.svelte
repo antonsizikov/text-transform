@@ -57,11 +57,11 @@
   <textarea class="textarea textarea-bordered" bind:value={inputText} placeholder="Enter your text here"></textarea>
 
   <div class="join">
-    <input class="join-item btn" type="radio" name="options" value="title" aria-label="Title" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="options" value="capital" aria-label="Capital" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="options" value="lower" aria-label="lower" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="options" value="upper" aria-label="UPPER" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="options" value="invert" aria-label="iNVERT" bind:group={selectedOption}>
+    <input class="join-item btn" type="radio" name="case" value="title" aria-label="Title" bind:group={selectedOption}>
+    <input class="join-item btn" type="radio" name="case" value="capital" aria-label="Capital" bind:group={selectedOption}>
+    <input class="join-item btn" type="radio" name="case" value="lower" aria-label="lower" bind:group={selectedOption}>
+    <input class="join-item btn" type="radio" name="case" value="upper" aria-label="UPPER" bind:group={selectedOption}>
+    <input class="join-item btn" type="radio" name="case" value="invert" aria-label="iNVERT" bind:group={selectedOption}>
   </div>
 
   <div class="indicator">
@@ -70,16 +70,15 @@
     </div>
     <textarea readonly class="textarea textarea-bordered" value={outputText} placeholder="Transformed text will appear here"></textarea>
   </div>
+  
+  <!-- <div class="join join-vertical">
+    <input class="join-item btn" type="radio" name="notations" value="flatcase" aria-label="flatcase" bind:group={selectedOption}>
+    <input class="join-item btn" type="radio" name="notations" value="camelCase" aria-label="camelCase" bind:group={selectedOption}>
+    <input class="join-item btn" type="radio" name="notations" value="PascalCase" aria-label="PascalCase" bind:group={selectedOption}>
+    <input class="join-item btn" type="radio" name="notations" value="kebab-case" aria-label="kebab-case" bind:group={selectedOption}>
+    <input class="join-item btn" type="radio" name="notations" value="snake_case" aria-label="snake_case" bind:group={selectedOption}>
+    <input class="join-item btn" type="radio" name="notations" value="SCREAMING_SNAKE_CASE" aria-label="SCREAMING_SNAKE_CASE" bind:group={selectedOption}>
+  </div> -->
 
-<!--   
-  <div class="join join-vertical">
-    <input class="join-item btn" type="radio" name="options" value="flatcase" aria-label="flatcase" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="options" value="camelCase" aria-label="camelCase" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="options" value="PascalCase" aria-label="PascalCase" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="options" value="kebab-case" aria-label="kebab-case" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="options" value="snake_case" aria-label="snake_case" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="options" value="SCREAMING_SNAKE_CASE" aria-label="SCREAMING_SNAKE_CASE" bind:group={selectedOption}>
-  </div>
--->
 
 </div>
