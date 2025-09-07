@@ -64,6 +64,23 @@
     <input class="join-item btn" type="radio" name="case" value="invert" aria-label="iNVERT" bind:group={selectedOption}>
   </div>
 
+  <div class="join">
+    <input class="join-item btn" type="radio" name="spacing" value="space" aria-label="Space" bind:group={selectedOption}>
+    <input class="join-item btn" type="radio" name="spacing" value="kebab" aria-label="Kebab" bind:group={selectedOption}>
+    <input class="join-item btn" type="radio" name="spacing" value="snake" aria-label="Snake" bind:group={selectedOption}>
+  </div>
+
+<select class="select">
+  <option disabled selected>Notation</option>
+  <option>Regular case</option>
+  <option>flatcase</option>
+  <option>camelCase</option>
+  <option>PascalCase</option>
+  <option>kebab-case</option>
+  <option>snake_case</option>
+  <option>SCREAMING_SNAKE_CASE</option>
+</select>
+
   <div class="indicator">
     <div class="indicator-item indicator-top">
       <button class="btn btn-xs" onclick={copyToClipboard}>Copy</button>
