@@ -76,8 +76,10 @@
       .split('\n')
       .filter(line => line.trim().replace(/[_\s-]+/g, '').length > 0) // Filter out empty lines
       .map(line => line
-        .replace(/^[\s_\-]+|[\s_\-]+$/g, '') // Remove leading and trailing spaces and dashes
-        .replace(/[\s_\-]+/g, ' ') // Replace multiple spaces with a single space
+        .replace(/^[\s_\-]+|[\s_\-]+$/g, '') // Remove leading and trailing spaces, dashes and underscores
+        .replace(/[\s]+/g, ' ') // Replace multiple spaces with a single space
+        .replace(/[-]+/g, '-') // Replace multiple dashes with a single dashe
+        .replace(/[_]+/g, '_') // Replace multiple underscores with a single underscore
       )
       .join('\n');
   }
