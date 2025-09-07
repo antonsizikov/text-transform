@@ -8,6 +8,8 @@
 
   function returnSpasing(selectedSpacing: string): string {
     switch (selectedSpacing) {
+      case 'skip':
+        return ' ';
       case 'space':
         return ' ';
       case 'kebab':
