@@ -1,7 +1,7 @@
 <script lang="ts">
   let inputText = $state('');
-  let selectedCase = $state('');
-  let selectedSpacing = $state('');
+  let selectedCase = $state('skip');
+  let selectedSpacing = $state('skip');
   // let selectedNotation = $state('');
   let isClean = $state(false);
   let outputText = $derived(transformText(inputText));
@@ -16,8 +16,6 @@
         return '_';
       case 'none':
         return '';
-      default:
-        return ' ';
     }
   }
 
@@ -39,7 +37,7 @@
           .join('\n');
       case 'invert':
         return inputText.split('').map(char => char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase()).join('');
-      default:
+      case 'skip':
         return inputText;
     }
   }
@@ -66,7 +64,7 @@
           .split('\n')
           .map(line => line.replace(/[_\s-]+/g, ''))
           .join('\n');
-      default:
+      case 'skip':
         return inputText;
     }
   }
@@ -128,6 +126,7 @@
   <textarea class="textarea textarea-bordered" bind:value={inputText} placeholder="Enter your text here"></textarea>
 
   <div class="join">
+    <input class="join-item btn" type="radio" name="case" value="skip" aria-label="Skip" bind:group={selectedCase}>
     <input class="join-item btn" type="radio" name="case" value="title" aria-label="Title" bind:group={selectedCase}>
     <input class="join-item btn" type="radio" name="case" value="capital" aria-label="Capital" bind:group={selectedCase}>
     <input class="join-item btn" type="radio" name="case" value="lower" aria-label="lower" bind:group={selectedCase}>
@@ -136,10 +135,11 @@
   </div>
 
   <div class="join">
+    <input class="join-item btn" type="radio" name="spacing" value="skip" aria-label="Skip" bind:group={selectedSpacing}>
     <input class="join-item btn" type="radio" name="spacing" value="space" aria-label="Space" bind:group={selectedSpacing}>
     <input class="join-item btn" type="radio" name="spacing" value="kebab" aria-label="Kebab" bind:group={selectedSpacing}>
     <input class="join-item btn" type="radio" name="spacing" value="snake" aria-label="Snake" bind:group={selectedSpacing}>
-    <input class="join-item btn" type="radio" name="spacing" value="none" aria-label="No" bind:group={selectedSpacing}>
+    <input class="join-item btn" type="radio" name="spacing" value="none" aria-label="None" bind:group={selectedSpacing}>
   </div>
 
   <label class="label">
