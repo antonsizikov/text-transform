@@ -13,6 +13,8 @@
         return '-';
       case 'snake':
         return '_';
+      case 'none':
+        return '';
       default:
         return ' ';
     }
@@ -57,6 +59,11 @@
         return inputText
           .split('\n')
           .map(line => line.replace(/[\s-]/g, '_'))
+          .join('\n');
+      case 'none':
+        return inputText
+          .split('\n')
+          .map(line => line.replace(/[_\s-]+/g, ''))
           .join('\n');
       default:
         return inputText;
@@ -112,6 +119,7 @@
     <input class="join-item btn" type="radio" name="spacing" value="space" aria-label="Space" bind:group={selectedSpacing}>
     <input class="join-item btn" type="radio" name="spacing" value="kebab" aria-label="Kebab" bind:group={selectedSpacing}>
     <input class="join-item btn" type="radio" name="spacing" value="snake" aria-label="Snake" bind:group={selectedSpacing}>
+    <input class="join-item btn" type="radio" name="spacing" value="none" aria-label="No" bind:group={selectedSpacing}>
   </div>
 
   <!-- <select class="select">
