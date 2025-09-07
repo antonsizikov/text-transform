@@ -1,7 +1,9 @@
-# Tauri + SvelteKit + TypeScript
+# Text Transform
 
-This template should help get you started developing with Tauri, SvelteKit and TypeScript in Vite.
+A simple app to transform text that i wrote to practise skills and to try some libraries. It can be used in web or as a desktop app.
 
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
+The app is writen with:
+- [Tauri](https://github.com/tauri-apps/tauri)
+- [Vite](https://github.com/vitejs/vite)
+- [Svelte](https://github.com/sveltejs/svelte)
+- [daisyUI](https://github.com/saadeghi/daisyui) ([Tailwind CSS](https://github.com/tailwindlabs/tailwindcss))
