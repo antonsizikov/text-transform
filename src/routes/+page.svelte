@@ -6,21 +6,6 @@
   let isClean = $state(false);
   let outputText = $derived(transformText(inputText));
 
-  function returnSpasing(selectedSpacing: string): string {
-    switch (selectedSpacing) {
-      case 'skip':
-        return ' ';
-      case 'space':
-        return ' ';
-      case 'kebab':
-        return '-';
-      case 'snake':
-        return '_';
-      case 'none':
-        return '';
-    }
-  }
-
   function transformCase(inputText: string, selectedCase: string): string {
     switch (selectedCase) {
       case 'lower':
