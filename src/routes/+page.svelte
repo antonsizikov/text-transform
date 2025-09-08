@@ -32,10 +32,16 @@
       case 'title':
         return inputText
           .split('\n')
-          .map(line => line
-          .split(/[-_\s]/)
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-          .join(returnSpasing(selectedSpacing)))
+          .map(line =>
+            line
+              .split(/([ \-_])/)
+              .map(part =>
+                /[ \-_]/.test(part)
+                  ? part 
+                  : part.charAt(0).toUpperCase() + part.slice(1).toLowerCase()
+              )
+              .join('')
+          )
           .join('\n');
       case 'invert':
         return inputText.split('').map(char => char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase()).join('');
