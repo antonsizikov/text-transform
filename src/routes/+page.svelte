@@ -1,20 +1,37 @@
 <script lang="ts">
   let inputText = $state('');
-  let selectedCase = $state('skip');
-  let selectedSpacing = $state('skip');
-  let isClean = $state(false);
   let outputText = $derived(transformText(inputText));
+  let isClean = $state(false);
 
-  let notations = $state([
-    //'Regular case',
-    'flatcase',
-    'camelCase', // Fix
-    'PascalCase', // Fix
-    'kebab-case',
-    'snake_case',
-    'SCREAMING_SNAKE_CASE'
-  ]);
+  let selectedCase = $state('skip');
+  let cases = $state([
+    { value: 'skip', label: 'Skip' },
+    { value: 'lower', label: 'lower' },
+    { value: 'upper', label: 'UPPER' },
+    { value: 'capital', label: 'Capital' },
+    { value: 'title', label: 'Title' },
+    { value: 'invert', label: 'iNVERT' },
+    //{ value: 'camel', label: 'camel' }
+  ])
+
+  let selectedSpacing = $state('skip');
+  let spacings = $state([
+    { value: 'skip', label: 'Skip' },
+    { value: 'space', label: 'Space' },
+    { value: 'kebab', label: 'Kebab' }, // hyphens
+    { value: 'snake', label: 'Snake' }, // underscore
+    { value: 'none', label: 'None' }
+  ])
+
   let selectedNotation = $state();
+  let notations = $state([
+    { value: 'flatCase', label: 'flatcase' },
+    { value: 'camelCase', label: 'camelCase' },
+    { value: 'pascalCase', label: 'PascalCase' },
+    { value: 'kebabCase', label: 'kebab-case' },
+    { value: 'snakeCase', label: 'snake_case' },
+    { value: 'screamingSnakeCase', label: 'SCREAMING_SNAKE_CASE' }
+  ]);
 
   function transformCase(inputText: string, selectedCase: string): string {
     switch (selectedCase) {
@@ -45,11 +62,11 @@
           .split('\n')
           .map(line => {
             return line
-              .split(/[\s\-_]+/)          // разбиваем по пробелам, дефисам и подчёркиваниям
-              .filter(Boolean)            // убираем пустые элементы (например при "--")
+              .split(/[\s\-_]+/)
+              .filter(Boolean)
               .map((word, i) =>
                 i === 0
-                  ? word.toLowerCase()    // первое слово -> всё маленькими
+                  ? word.toLowerCase()
                   : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
               )
               .join('');
@@ -111,48 +128,48 @@
     navigator.clipboard.writeText(outputText);
   }
 
-  function notationsHandler1() {
+  function notationsSelectionHandler() {
     switch (selectedNotation) {
-      case 'flatcase':
+      case 'flatCase':
         selectedCase = 'lower';
         selectedSpacing = 'none';
         break;
       case 'camelCase':
-        selectedCase = 'camel'; // add camel case
+        selectedCase = 'camel';
         selectedSpacing = 'none';
         break;
-      case 'PascalCase':
+      case 'pascalCase':
         selectedCase = 'title';
         selectedSpacing = 'none';
         break;
-      case 'kebab-case':
+      case 'kebabCase':
         selectedCase = 'lower';
         selectedSpacing = 'kebab';
         break;
-      case 'snake_case':
+      case 'snakeCase':
         selectedCase = 'lower';
         selectedSpacing = 'snake';
         break;
-      case 'SCREAMING_SNAKE_CASE':
+      case 'screamingSnakeCase':
         selectedCase = 'upper';
         selectedSpacing = 'snake';
         break;
     }
   }
 
-  function notationsHandler2() {
+  function notationsAutoHandler() {
     if (selectedCase == 'lower' && selectedSpacing == 'none') {
-      selectedNotation = 'flatcase';
+      selectedNotation = 'flatCase';
     } else if (selectedCase == 'camel' && selectedSpacing == 'none') {
       selectedNotation = 'camelCase';
-    } else if (selectedCase == 'title' && selectedSpacing == 'none') {
-      selectedNotation = 'PascalCase';
+    } else if (selectedCase == 'Title' && selectedSpacing == 'none') {
+      selectedNotation = 'pascalCase';
     } else if (selectedCase == 'lower' && selectedSpacing == 'kebab') {
-      selectedNotation = 'kebab-case';
+      selectedNotation = 'kebabCase';
     } else if (selectedCase == 'lower' && selectedSpacing == 'snake') {
-      selectedNotation = 'snake_case';
+      selectedNotation = 'snakeCase';
     } else if (selectedCase == 'upper' && selectedSpacing == 'snake') {
-      selectedNotation = 'SCREAMING_SNAKE_CASE';
+      selectedNotation = 'screamingSnakeCase';
     } else {
       selectedNotation = 'Notation';
     }
@@ -191,34 +208,50 @@
 </style>
 
 <div class="container mx-auto flex flex-col items-center gap-4">
-  <textarea class="textarea textarea-bordered" bind:value={inputText} placeholder="Enter your text here"></textarea>
+
+  <textarea
+    class="textarea textarea-bordered"
+    bind:value={inputText}
+    placeholder="Enter your text here"
+  ></textarea>
 
   <div class="join">
-    <input class="join-item btn" type="radio" name="case" value="skip" aria-label="Skip" bind:group={selectedCase} onchange={notationsHandler2}>
-    <input class="join-item btn" type="radio" name="case" value="title" aria-label="Title" bind:group={selectedCase} onchange={notationsHandler2}>
-    <input class="join-item btn" type="radio" name="case" value="capital" aria-label="Capital" bind:group={selectedCase} onchange={notationsHandler2}>
-    <input class="join-item btn" type="radio" name="case" value="lower" aria-label="lower" bind:group={selectedCase} onchange={notationsHandler2}>
-    <input class="join-item btn" type="radio" name="case" value="upper" aria-label="UPPER" bind:group={selectedCase} onchange={notationsHandler2}>
-    <input class="join-item btn" type="radio" name="case" value="invert" aria-label="iNVERT" bind:group={selectedCase} onchange={notationsHandler2}>
+    {#each cases as _case}
+      <input
+        class="join-item btn"
+        type="radio"
+        name="case"
+        value={_case.value}
+        aria-label={_case.label}
+        bind:group={selectedCase}
+        onchange={notationsAutoHandler}
+        >
+    {/each}
   </div>
 
   <div class="join">
-    <input class="join-item btn" type="radio" name="spacing" value="skip" aria-label="Skip" bind:group={selectedSpacing} onchange={notationsHandler2}>
-    <input class="join-item btn" type="radio" name="spacing" value="space" aria-label="Space" bind:group={selectedSpacing} onchange={notationsHandler2}>
-    <input class="join-item btn" type="radio" name="spacing" value="kebab" aria-label="Kebab" bind:group={selectedSpacing} onchange={notationsHandler2}>
-    <input class="join-item btn" type="radio" name="spacing" value="snake" aria-label="Snake" bind:group={selectedSpacing} onchange={notationsHandler2}>
-    <input class="join-item btn" type="radio" name="spacing" value="none" aria-label="None" bind:group={selectedSpacing} onchange={notationsHandler2}>
+    {#each spacings as spacing}
+      <input
+        class="join-item btn"
+        type="radio"
+        name="spacing"
+        value={spacing.value}
+        aria-label={spacing.label}
+        bind:group={selectedSpacing}
+        onchange={notationsAutoHandler}
+        >
+    {/each}
   </div>
 
 	<select
     class="select bg-base-200"
 		bind:value={selectedNotation}
-		onchange={() => (notationsHandler1())}
+		onchange={() => (notationsSelectionHandler())}
 	>
     <option disabled selected>Notation</option>
 		{#each notations as notation}
-			<option value={notation}>
-				{notation}
+			<option value={notation.value}>
+				{notation.label}
 			</option>
 		{/each}
 	</select>
@@ -232,7 +265,13 @@
     <div class="indicator-item indicator-top">
       <button class="btn btn-xs" onclick={copyToClipboard}>Copy</button>
     </div>
-    <textarea readonly class="textarea textarea-bordered" value={outputText} placeholder="Transformed text will appear here"></textarea>
+
+    <textarea
+      readonly
+      class="textarea textarea-bordered"
+      value={outputText}
+      placeholder="Transformed text will appear here"
+    ></textarea>
   </div>
 
 </div>
