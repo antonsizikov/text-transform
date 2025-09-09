@@ -62,7 +62,7 @@
     }
   }
 
-  function cleanText(inputText: string, cbStrip: boolean): string {
+  function cleanText(inputText: string): string {
     return inputText
       .split('\n')
       .filter(line => line.trim().replace(/[_\s-]+/g, '').length > 0) // Filter out empty lines
@@ -139,26 +139,6 @@
     <input type="checkbox" class="checkbox" bind:checked={isClean}/>
     Trim spaces and remove dups
   </label>
-
-  <!-- <select class="select">
-    <option disabled selected>Notation</option>
-    <option>Regular case</option>
-    <option>flatcase</option>
-    <option>camelCase</option>
-    <option>PascalCase</option>
-    <option>kebab-case</option>
-    <option>snake_case</option>
-    <option>SCREAMING_SNAKE_CASE</option>
-  </select> -->
-
-  <!-- <div class="join join-vertical">
-    <input class="join-item btn" type="radio" name="notations" value="flatcase" aria-label="flatcase" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="notations" value="camelCase" aria-label="camelCase" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="notations" value="PascalCase" aria-label="PascalCase" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="notations" value="kebab-case" aria-label="kebab-case" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="notations" value="snake_case" aria-label="snake_case" bind:group={selectedOption}>
-    <input class="join-item btn" type="radio" name="notations" value="SCREAMING_SNAKE_CASE" aria-label="SCREAMING_SNAKE_CASE" bind:group={selectedOption}>
-  </div> -->
 
   <div class="indicator">
     <div class="indicator-item indicator-top">
