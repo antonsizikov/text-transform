@@ -77,9 +77,9 @@
 
   function transformText(inputText: string): string {
     if (isClean) {
-      return transformCase(transformSpasing(cleanText(inputText, isClean), selectedSpacing), selectedCase);
+      return cleanText(transformSpasing(transformCase(inputText, selectedCase), selectedSpacing));
     }
-    return transformCase(transformSpasing(inputText, selectedSpacing), selectedCase);
+    return transformSpasing(transformCase(inputText, selectedCase), selectedSpacing);
   }
 
   function copyToClipboard() {
