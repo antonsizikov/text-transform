@@ -30,6 +30,21 @@
           .join('\n');
       case 'invert':
         return inputText.split('').map(char => char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase()).join('');
+      case 'camel':
+        return inputText
+          .split('\n')
+          .map(line => {
+            return line
+              .split(/[\s\-_]+/)          // разбиваем по пробелам, дефисам и подчёркиваниям
+              .filter(Boolean)            // убираем пустые элементы (например при "--")
+              .map((word, i) =>
+                i === 0
+                  ? word.toLowerCase()    // первое слово -> всё маленькими
+                  : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+              )
+              .join('');
+          })
+          .join('\n');
       case 'skip':
         return inputText;
     }
