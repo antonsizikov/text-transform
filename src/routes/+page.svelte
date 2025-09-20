@@ -244,12 +244,17 @@
 
 <div class="container mx-auto flex flex-col items-center gap-4">
 
-  <textarea
-    class="textarea textarea-bordered"
-    bind:value={inputText}
-    placeholder="Enter your text here"
-    onchange={() => {saveToStorage();}}
-  ></textarea>
+  <div class="indicator">
+    <textarea
+      class="textarea textarea-bordered"
+      bind:value={inputText}
+      placeholder="Enter your text here"
+      onchange={() => {saveToStorage();}}
+    ></textarea>
+    <div class="indicator-item indicator-top">
+      <button class="btn btn-xs" onclick={() => {inputText = ""; saveToStorage();}}>Clear</button>
+    </div>
+  </div>
 
   <div class="join">
     {#each cases as _case}
@@ -303,16 +308,15 @@
   </label>
 
   <div class="indicator">
-    <div class="indicator-item indicator-top">
-      <button class="btn btn-xs" onclick={copyToClipboard}>Copy</button>
-    </div>
-
     <textarea
       readonly
       class="textarea textarea-bordered"
       value={outputText}
       placeholder="Transformed text will appear here"
     ></textarea>
+    <div class="indicator-item indicator-top">
+      <button class="btn btn-xs" onclick={copyToClipboard}>Copy</button>
+    </div>
   </div>
 
 </div>
