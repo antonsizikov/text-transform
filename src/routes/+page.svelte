@@ -23,7 +23,7 @@
     { value: 'none', label: 'None' }
   ])
 
-  let selectedNotation = $state();
+  let selectedNotation = $state('Notation');
   let notations = $state([
     { value: 'flatCase', label: 'flatcase' },
     { value: 'camelCase', label: 'camelCase' },
@@ -124,10 +124,6 @@
     return transformSpasing(transformCase(inputText, selectedCase), selectedSpacing);
   }
 
-  function copyToClipboard() {
-    navigator.clipboard.writeText(outputText);
-  }
-
   function notationsSelectionHandler() {
     switch (selectedNotation) {
       case 'flatCase':
@@ -174,6 +170,45 @@
       selectedNotation = 'Notation';
     }
   }
+
+  function copyToClipboard() {
+    navigator.clipboard.writeText(outputText);
+  }
+
+  function saveToStorage() {
+    localStorage.text = inputText;
+    localStorage.case = selectedCase;
+    localStorage.spacing = selectedSpacing;
+    localStorage.notation = selectedNotation;
+    localStorage.clean = JSON.stringify(isClean);
+  }
+
+  function restoreFromStorage() {
+    if (localStorage.text) inputText = localStorage.text;
+    if (localStorage.case) selectedCase = localStorage.case;
+    if (localStorage.spacing) selectedSpacing = localStorage.spacing;
+    if (localStorage.notation) selectedNotation = localStorage.notation;
+    if (localStorage.clean) isClean = JSON.parse(localStorage.clean);
+  }
+
+  function clearStorage() {
+    delete localStorage.text;
+    delete localStorage.case;
+    delete localStorage.spacing;
+    delete localStorage.notation;
+    delete localStorage.clean;
+  }
+
+  function resetAll() {
+    inputText = '';
+    selectedCase = 'skip';
+    selectedSpacing = 'skip';
+    selectedNotation = 'Notation';
+    isClean = false;
+    clearStorage();
+  }
+
+  restoreFromStorage();
 </script>
 
 <style global>
@@ -213,6 +248,7 @@
     class="textarea textarea-bordered"
     bind:value={inputText}
     placeholder="Enter your text here"
+    onchange={() => {saveToStorage();}}
   ></textarea>
 
   <div class="join">
@@ -224,7 +260,7 @@
         value={_case.value}
         aria-label={_case.label}
         bind:group={selectedCase}
-        onchange={notationsAutoHandler}
+        onchange={() => {notationsAutoHandler(); saveToStorage();}}
         >
     {/each}
   </div>
@@ -238,7 +274,7 @@
         value={spacing.value}
         aria-label={spacing.label}
         bind:group={selectedSpacing}
-        onchange={notationsAutoHandler}
+        onchange={() => {notationsAutoHandler(); saveToStorage();}}
         >
     {/each}
   </div>
@@ -246,7 +282,7 @@
 	<select
     class="select bg-base-200"
 		bind:value={selectedNotation}
-		onchange={() => (notationsSelectionHandler())}
+		onchange={() => {notationsSelectionHandler(); saveToStorage();}}
 	>
     <option disabled selected>Notation</option>
 		{#each notations as notation}
@@ -257,7 +293,12 @@
 	</select>
 
   <label class="label">
-    <input type="checkbox" class="checkbox" bind:checked={isClean}/>
+    <input
+      type="checkbox"
+      class="checkbox"
+      bind:checked={isClean}
+      onchange={() => {saveToStorage();}}
+      />
     Trim spaces and remove dups
   </label>
 
