@@ -240,6 +240,11 @@
   .select {
     margin: 10px;
   }
+  .fab {
+    position: fixed;
+    top: 7px;
+    right: 7px;
+  }
 </style>
 
 <div class="container mx-auto flex flex-col items-center gap-4">
@@ -317,6 +322,19 @@
     <div class="indicator-item indicator-top">
       <button class="btn btn-xs" onclick={copyToClipboard}>Copy</button>
     </div>
+  </div>
+
+  <div class="fab">
+    <button class="btn btn-sm btn-circle" aria-label="Reset all" onclick={resetAll}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 -960 960 960"
+        height="20px"
+        width="20px"
+        fill="currentColor"
+        style="opacity:0.5"
+      ><path d="M480-40q-81 0-152.5-31T203-155q-53-53-84-124.5T88-432q0-22 15.5-37.5T141-485q22 0 37.5 15.5T194-432q0 119 83.5 202.5T480-146q119 0 202.5-83.5T766-432q0-119-83.5-202.5T480-718l26 26q14 14 15 34.5T508-621q-14 17-36.5 18T433-618L315-733q-16-16-16.5-37.5T314-808l114-114q16-16 37.5-15.5T503-921q15 16 15.5 37T503-847l-23 23q81 0 152.5 31T757-709q53 53 84 124.5T872-432q0 81-31 152.5T757-155q-53 53-124.5 84T480-40Z"/></svg>
+    </button>
   </div>
 
 </div>
